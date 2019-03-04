@@ -1,22 +1,26 @@
 package entity;
-import api.SqlEntity;
-import api.SqlField;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@SqlEntity(name = Attribute.ENTITY_NAME)
-public class Attribute extends AbstractEntity {
+@Entity
+@Table(name = Attribute.ENTITY_NAME)
+public class Attribute {
 
     public static final String ENTITY_NAME = "attribute";
 
-    @SqlField(name = Field.ATTRIBUTE_ID, primaryKey = true)
+    @Id
+    @Column(name = Field.ATTRIBUTE_ID)
     public Long attributeId;
 
-    @SqlField(name = Field.ATTRIBUTE_NAME)
+    @Column(name = Field.ATTRIBUTE_NAME)
     public Type type;
 
     public static final class Field {

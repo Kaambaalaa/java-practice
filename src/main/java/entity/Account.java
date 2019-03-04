@@ -1,36 +1,50 @@
 package entity;
-import api.SqlEntity;
-import api.SqlField;
-import api.SqlForeignMapping;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import javax.annotation.Generated;
 
+import javax.persistence.*;
+import javax.persistence.metamodel.StaticMetamodel;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
+@Entity
+@Builder
 @AllArgsConstructor
-@SqlEntity(name = Account.ENTITY_NAME)
-public class Account extends AbstractEntity {
+@NoArgsConstructor
+@Table(name = Account.ENTITY_NAME)
+public class Account {
 
     public static final String ENTITY_NAME = "account";
 
-    @SqlField(name = Field.ACCOUNT_ID, primaryKey = true)
-    public Long accountId;
+    @Id
+    @Column(name = Field.ACCOUNT_ID)
+    private Long accountId;
 
-    @SqlField(name = Field.EMAIL)
-    public String email;
+    @Column(name = Field.EMAIL)
+    private String email;
 
-    @SqlField(name = Field.PASSWORD)
-    public String password;
+    @Column(name = Field.PASSWORD)
+    private String password;
 
-    @SqlForeignMapping(entityType = Chat.class,field = Field.ACCOUNT_ID, foreignField = Chat.Field.CHAT_ID, relationName = "account_chat", many = true, orphanRemoval = true)
-    public List<Chat> chatList;
+    @Builder.Default
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = Account.ENTITY_NAME, cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    public List<AccountChat> accountChatList = new ArrayList<>();
+
+    public void addChat(Chat chat) {
+        accountChatList.add(new AccountChat(this, chat));
+    }
 
     public static final class Field {
         public static final String ACCOUNT_ID = "account_id";
-        public static final String EMAIL = "email";
-        public static final String PASSWORD = "password";
+        public static final String EMAIL = "EMAIL";
+        public static final String PASSWORD = "PASSWORD";
     }
 }

@@ -1,10 +1,12 @@
 ----ENTITIES
+
+-- CREATE SCHEMA IF NOT EXISTS PUBLIC;
+
 create table PUBLIC.account
 (
-  account_id       int primary key,
-  email    varchar(255),
+  account_id int primary key,
+  email varchar(255),
   password varchar(255)
-
 );
 --
 create table PUBLIC.chat

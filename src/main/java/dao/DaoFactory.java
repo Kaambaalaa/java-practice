@@ -1,11 +1,31 @@
 package dao;
 
-import entity.AbstractEntity;
-import org.flywaydb.core.internal.util.jdbc.JdbcTemplate;
+import entity.Account;
+import entity.Attribute;
+import entity.Chat;
+import entity.Message;
+
+import javax.persistence.EntityManager;
+
 
 public class DaoFactory {
 
-    public static <E extends AbstractEntity>  Dao<E> of(Class<E> clazz, JdbcTemplate jdbcTemplate) {
-        return new Dao<>(clazz, jdbcTemplate);
+    private EntityManager em;
+
+    public static Dao<Account> ofAccount(EntityManager em) {
+        return new AccountDao(em);
     }
+
+    public static Dao<Chat> ofChat(EntityManager em) {
+        return new ChatDao(em);
+    }
+
+    public static Dao<Message> ofMessage(EntityManager em) {
+        return new MessageDao(em);
+    }
+
+    public static Dao<Attribute> ofAttribute(EntityManager em) {
+        return new AttributeDao(em);
+    }
+
 }
