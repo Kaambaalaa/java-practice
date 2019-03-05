@@ -11,6 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import repository.AccountRepository;
+import repository.AttributeRepository;
+import repository.ChatRepository;
+import repository.MessageRepository;
+
+import javax.transaction.Transactional;
 
 @EnableTransactionManagement
 @Configuration
@@ -18,23 +24,23 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class DaoConfig {
 
     @Bean
-    public Dao<Account> accountDao(SessionFactory sessionFactory) {
-        return DaoFactory.ofAccount(sessionFactory);
+    public Dao<Account> accountDao(AccountRepository accountRepository) {
+        return DaoFactory.ofAccount(accountRepository);
     }
 
     @Bean
-    public Dao<Message> messageDao(SessionFactory sessionFactory) {
-        return DaoFactory.ofMessage(sessionFactory);
+    public Dao<Message> messageDao(MessageRepository messageRepository) {
+        return DaoFactory.ofMessage(messageRepository);
     }
 
     @Bean
-    public Dao<Chat> chatDao(SessionFactory sessionFactory) {
-        return DaoFactory.ofChat(sessionFactory);
+    public Dao<Chat> chatDao(ChatRepository chatRepository) {
+        return DaoFactory.ofChat(chatRepository);
     }
 
     @Bean
-    public Dao<Attribute> attributeDao(SessionFactory sessionFactory) {
-        return DaoFactory.ofAttribute(sessionFactory);
+    public Dao<Attribute> attributeDao(AttributeRepository attributeRepository) {
+        return DaoFactory.ofAttribute(attributeRepository);
     }
 
 }

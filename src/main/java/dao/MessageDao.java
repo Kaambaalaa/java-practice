@@ -2,8 +2,7 @@ package dao;
 
 import entity.Message;
 import lombok.AllArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import repository.MessageRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -12,29 +11,29 @@ import java.util.Optional;
 @AllArgsConstructor
 public class MessageDao implements Dao<Message> {
 
-    private SessionFactory sessionFactory;
+    private MessageRepository messageRepository;
 
     @Override
     @Transactional
     public Optional<Message> findById(Long id) {
-        return Optional.ofNullable(getSession(sessionFactory).get(Message.class, id));
+        return messageRepository.findById(id);
     }
 
     @Override
     @Transactional
     public List<Message> findAll() {
-        return getSession(sessionFactory).createCriteria(Message.class).list();
+        return messageRepository.findAll();
     }
 
     @Override
     @Transactional
-    public void save(Message chat) {
-        getSession(sessionFactory).save(chat);
+    public void save(Message message) {
+        messageRepository.save(message);
     }
 
     @Override
     @Transactional
     public void delete(Message message) {
-        getSession(sessionFactory).delete(message);
+        messageRepository.delete(message);
     }
 }
