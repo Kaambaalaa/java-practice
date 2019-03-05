@@ -29,10 +29,10 @@ public class PersistenceConfig {
 
         properties.put(AvailableSettings.DIALECT, "org.hibernate.dialect.H2Dialect");
         properties.put(AvailableSettings.HBM2DDL_AUTO, "update");
-        properties.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+//        properties.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         properties.put(AvailableSettings.IMPLICIT_NAMING_STRATEGY, "org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl");
         properties.put(AvailableSettings.PHYSICAL_NAMING_STRATEGY, "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl");
-
+        properties.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "org.springframework.orm.hibernate5.SpringSessionContext");
 
         if (dataSource != null) {
             properties.put("hibernate.connection.datasource", dataSource);

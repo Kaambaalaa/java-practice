@@ -18,7 +18,7 @@ public class AccountChat {
     @EmbeddedId
     private AccountChatPK accountChatPK;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @MapsId(Account.Field.ACCOUNT_ID)
     @JoinColumn(name = Account.Field.ACCOUNT_ID, foreignKey = @ForeignKey(name = "CONSTRAINT_C"))
     private Account account;

@@ -4,28 +4,29 @@ import entity.Account;
 import entity.Attribute;
 import entity.Chat;
 import entity.Message;
+import org.hibernate.SessionFactory;
 
 import javax.persistence.EntityManager;
 
 
 public class DaoFactory {
 
-    private EntityManager em;
+    private SessionFactory sessionFactory;
 
-    public static Dao<Account> ofAccount(EntityManager em) {
-        return new AccountDao(em);
+    public static Dao<Account> ofAccount(SessionFactory sessionFactory) {
+        return new AccountDao(sessionFactory);
     }
 
-    public static Dao<Chat> ofChat(EntityManager em) {
-        return new ChatDao(em);
+    public static Dao<Chat> ofChat(SessionFactory sessionFactory) {
+        return new ChatDao(sessionFactory);
     }
 
-    public static Dao<Message> ofMessage(EntityManager em) {
-        return new MessageDao(em);
+    public static Dao<Message> ofMessage(SessionFactory sessionFactory) {
+        return new MessageDao(sessionFactory);
     }
 
-    public static Dao<Attribute> ofAttribute(EntityManager em) {
-        return new AttributeDao(em);
+    public static Dao<Attribute> ofAttribute(SessionFactory sessionFactory) {
+        return new AttributeDao(sessionFactory);
     }
 
 }

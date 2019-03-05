@@ -10,7 +10,7 @@
         </layout>
     </appender>
 
-    <logger name="iasa.ka55" level="debug"
+    <logger name="root" level="debug"
             additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>

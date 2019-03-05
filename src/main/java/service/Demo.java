@@ -6,13 +6,14 @@ import entity.Attribute;
 import entity.Chat;
 import entity.Message;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Collections;
 
-//@ComponentScan
+@Slf4j
 @AllArgsConstructor
 @Service
 @DependsOn("flyway")
@@ -25,14 +26,17 @@ public class Demo {
 
     @PostConstruct
     public void demonstrateDao() {
+
+        chatDao.save(Chat.builder()
+                .chatId(1L)
+                .chatName("cool_chat")
+                .build());
+        log.info("Chat saved.");
         Account account = Account.builder()
                 .accountId(1L)
                 .password("qwerty")
                 .email("mail@mail").build();
-        Chat chat = Chat.builder()
-                .chatId(1L)
-                .chatName("cool_chat")
-                .build();
+        Chat chat = chatDao.findById(1L).orElseThrow(() -> new RuntimeException("Smth went wrong here."));
         account.addChat(chat);
         accountDao.save(account);
 

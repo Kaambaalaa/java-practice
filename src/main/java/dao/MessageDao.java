@@ -2,43 +2,39 @@ package dao;
 
 import entity.Message;
 import lombok.AllArgsConstructor;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
 public class MessageDao implements Dao<Message> {
 
-    private EntityManager em;
+    private SessionFactory sessionFactory;
 
     @Override
+    @Transactional
     public Optional<Message> findById(Long id) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Message> criteria = builder.createQuery(Message.class);
-        Root<Message> root = criteria.from(Message.class);
-        criteria.where(builder.equal(root.get("messageId"), id));
-        return Optional.ofNullable(em.createQuery(criteria).getSingleResult());
+        return Optional.ofNullable(getSession(sessionFactory).get(Message.class, id));
     }
 
     @Override
+    @Transactional
     public List<Message> findAll() {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Message> criteria = builder.createQuery(Message.class).where();
-        Root<Message> root = criteria.from(Message.class);
-        return em.createQuery(criteria).getResultList();
+        return getSession(sessionFactory).createCriteria(Message.class).list();
     }
 
     @Override
+    @Transactional
     public void save(Message chat) {
-        em.persist(chat);
+        getSession(sessionFactory).save(chat);
     }
 
     @Override
+    @Transactional
     public void delete(Message message) {
-        findById(message.getMessageId()).ifPresent(em::remove);
+        getSession(sessionFactory).delete(message);
     }
 }
